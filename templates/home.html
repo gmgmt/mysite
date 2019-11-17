@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    我的网站|首页
+{% endblock %}
+
+{% block header_extends %}
+    <link rel="stylesheet" type="text/css" href="/static/home.css">
+    <script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
+{% endblock %}
+
+{% block nav_home_active %}
+    active
+{% endblock %}
+
+{% block content %}
+    <h3 class="home-content">欢迎访问我的网站，随便看</h3>
+     <!-- 图表容器 DOM -->
+    <div id="container"></div>
+    <div class="hot_data">
+        <!-- 今天24小时内的热门博客 -->
+        <h3>今天热门博客</h3>
+        <ul>
+            {% for hot_data in today_hot_data %}
+                <li>
+                    <!-- 得到热门博客的标题和阅读量，标题可以点击 -->
+                    <a href="{% url 'blog_detail' hot_data.content_object.pk %}">
+                    {{ hot_data.content_object.title }}
+                    </a>({{ hot_data.read_num }})
+                </li>
+            {% empty %}
+                <li>今天暂时没有热门博客</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="hot_data">
+        <!-- 昨天24小时内的热门博客 -->
+        <h3>昨天热门博客</h3>
+        <ul>
+            {% for hot_data in yesterday_hot_data %}
+                <li>
+                    <!-- 得到热门博客的标题和阅读量，标题可以点击 -->
+                    <a href="{% url 'blog_detail' hot_data.content_object.pk %}">
+                    {{ hot_data.content_object.title }}
+                    </a>({{ hot_data.read_num }})
+                </li>
+            {% empty %}
+                <li>昨天暂时没有热门博客</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="hot_data">
+        <!-- 7天热门博客 -->
+        <h3>7天热门博客</h3>
+        <ul>
+            {% for hot_blogs in senven_days_hot_blogs %}
+                <li>
+                    <!-- 得到热门博客的标题和阅读量，标题可以点击 -->
+                    <a href="{% url 'blog_detail' hot_blogs.id %}">
+                    {{ hot_blogs.title }}
+                    </a>({{ hot_blogs.read_num_sum }})
+                </li>
+            {% empty %}
+                <li>7天暂时没有热门博客</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script>
+        // 图表配置
+        var options = {
+            chart: { type: 'line' },
+            title: { text: null },
+            xAxis: { 
+                categories: {{ dates|safe }} ,
+                tickmarkPlacement: 'on',
+                title: { text: '前7日阅读量'},
+            },
+            yAxis: {
+                title: { text: null },
+                // y轴文本去除
+                labels: { enabled: false },
+                // 变为虚线
+                gridLineDashStyle: 'Dash',
+            },
+            series: [{                              // 数据列
+                name: '阅读量',                        // 数据列名
+                data: {{ read_nums }},                   // 数据
+            }],
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            // 图例也去掉
+            legend: { enabled: false },
+            credits: { enabled: false },
+        };
+        // 图表初始化函数
+        var chart = Highcharts.chart('container', options);
+    </script>
+{% endblock %}

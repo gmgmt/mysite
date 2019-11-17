@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}我的网站|注册{% endblock %}
+
+
+{% block nav_home_active %}active{% endblock %}
+
+{% block content %}
+    
+    <div class="containter">
+        <div class="row">
+            <div class="col-xs-3 col-xs-offset-5">
+                {% if not user.is_authenticated %}
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">注册</h3>
+                      </div>
+                      <div class="panel-body">
+                        <!-- 跳转链接指向自己可以写#  action="{% url 'login' %}"  -->
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <!-- {{ login_form }} -->
+
+                            <!-- 本来上面写就可以，但是为了去除账号密码后的: -->
+                            {% for field in reg_form %}
+                                <label for="field.id_for_label">{{ field.label }}</label>
+                                {{ field }}
+                                <!-- 标红显示错误信息,和后面的span标签一起 -->
+                                <p class="text-danger">{{ field.errors.as_text }}</p>
+                            {% endfor %}
+                            <span class="text-danger">{{ reg_form.non_field_errors }}</span>
+                            <div class="clearfix"></div>
+                            <button id="send_code" class="btn btn-primary pull-left">发送验证码</button>
+                            <input type="submit" value="注册" class="btn btn-primary pull-right">
+                        </form>
+                      </div>
+                    </div>
+                {% else %}
+                    <span>已登录，跳转到首页...</span>
+                    <script type="text/javascript">
+                        window.location.href = '/';
+                    </script>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
+
+
+{% block script_extends %}
+    <script type="text/javascript">
+        // 发送验证码标签的点击行为
+        $("#send_code").click(function(){
+            // 网页检查元素发现id为id_email,将他得值赋给email
+            var email = $("#id_email").val();
+            if(email==''){
+                // 显示提示信息
+                $("#tip").text("邮箱不能为空");
+                return false;
+            }
+
+            // 发送验证码
+            $.ajax({
+                url: "{% url 'send_verification_code' %}",
+                type: 'GET',
+                data: {
+                    'email': email,
+                    'send_for': 'register_code'
+                },
+                cache: false,
+                success: function(data){
+                    if(data['status'=='ERROR']){
+                        alter(data['status'])
+                    }
+                }
+            });
+            // 把按钮变灰
+            $(this).addClass('disabled');
+            $(this).attr('disabled', true);
+            var time = 30;
+            $(this).text(time + 's');
+            var interval = setInterval(() => {
+                if(time <= 0){
+                    clearInterval(interval);
+                    $(this).removeClass('disabled');
+                    $(this).attr('disabled', false);
+                    $(this).text('发送验证码');
+                    return false;
+                }
+                time --;
+                $(this).text(time + 's');
+            }, 1000);
+        });
+    </script>
+{% endblock %}
