@@ -37,7 +37,7 @@ ALLOWED_HOSTS = ['*']
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-DATABASES_PASSWORD = os.environ['DATABASES_PASSWORD']
+DATABASE_PASSWORD = os.environ['DATABASES_PASSWORD']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
