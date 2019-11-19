@@ -22,7 +22,7 @@
         <!-- 行 -->
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-8">
-
+            
                 <div class="panel panel-default">
                     <!-- {{ blogs|length }} 过滤器，统计blogs长度 -->
                     <div class="panel-heading">{% block blog_list_title %}博客列表{% endblock %}</div>
@@ -91,8 +91,7 @@
                     <p>
                         共有{{ page_of_blogs.paginator.count }}篇博客,当前第{{ page_of_blogs.number }}页，共{{ page_of_blogs.paginator.num_pages }}页
                     </p>
-                </div>
-               
+                </div>      
             </div>
             <div class="hidden-xs col-sm-4 col-md-4">
                 <div class="panel panel-default">
