@@ -42,13 +42,13 @@ ALLOWED_HOSTS = []
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-DATABASES_PASSWORD = os.environ['DATABASES_PASSWORD']
+DATABASE_PASSWORD = os.environ['DATABASE_PASSWORD']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mysite_db',
         'USER': 'root',
-        'PASSWORD': DATABASES_PASSWORD,
+        'PASSWORD': DATABASE_PASSWORD,
         'HOST': 'localhost',
         'PORT': '3306',
     }
