@@ -8,10 +8,12 @@ https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/
 """
 
 import os
-
+import sys
+import sys
+sys.path.insert(0, '/home/mysite')
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings.development")
-os.sys.path.append('/home/mysite')
+
 
 application = get_wsgi_application()
