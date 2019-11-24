@@ -64,8 +64,9 @@ def update_comment(request):
             comment.reply_to = parent.user
         comment.save()
 
-        # 发送邮件
-        comment.send_mail()
+
+        # # 发送邮件
+        # comment.send_mail()
 
 
         # 重定向，跳转回原来页面
