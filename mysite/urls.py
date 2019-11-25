@@ -30,6 +30,7 @@ urlpatterns = [
     path('notifications/', include('notifications.urls', namespace='notifications')),
     path('my_notifications/', include('my_notifications.urls')),
     path('search/', views.search, name="search"),
+    path('captcha/', include('captcha.urls'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

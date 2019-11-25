@@ -17,9 +17,12 @@
                         <div class="panel-body">
                         <!-- 跳转链接指向自己可以写#  action="{% url 'login' %}"  -->
                             <form action="" method="POST">
+                                {% if login_form.captcha.errors %}
+                                    <div class="alert alert-warning">{{ login_form.captcha.errors }}</div>
+                                {% endif %}
+
                                 {% csrf_token %}
                                 <!-- {{ login_form }} -->
-
                                 <!-- 本来上面写就可以，但是为了去除账号密码后的: -->
                                 {% for field in login_form %}
                                     <label for="field.id_for_label">{{ field.label }}</label>

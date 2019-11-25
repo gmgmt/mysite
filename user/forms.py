@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import auth
 from django.contrib.auth.models import User
+from captcha.fields import CaptchaField
 
 
 
@@ -14,6 +15,7 @@ class LoginForm(forms.Form):
                                widget=forms.PasswordInput(  \
                                             attrs={'class': 'form-control', 'placeholder': '请输入密码'}))
 
+    captcha = CaptchaField(label='验证码')
 
 
     def clean(self):
@@ -57,6 +59,8 @@ class RegForm(forms.Form):
                                      min_length=6,
                                      widget=forms.PasswordInput(
                                                   attrs={'class': 'form-control', 'placeholder': '再输入一次密码'}))
+
+    captcha = CaptchaField(label='验证码')
 
     def __init__(self, *args, **kwargs):
         '''将user传入'''

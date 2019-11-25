@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'user',
     'notifications',
     'my_notifications',
+    'captcha',
 ]
 
 MIDDLEWARE = [
