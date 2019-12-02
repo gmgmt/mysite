@@ -127,7 +127,7 @@ def change_nickname(request):
     context['submit_text'] = '修改'
     context['form'] = form
     context['return_back_url'] = redirect_to
-    return render(request, 'user/form.html', context)
+    return render(request, 'form.html', context)
 
 
 
