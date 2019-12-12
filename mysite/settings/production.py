@@ -28,7 +28,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True
 
 # ip地址
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 

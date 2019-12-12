@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
+{% load user_tags %}
 
 {% block title %}我的网站|登录{% endblock %}
 
@@ -15,28 +17,31 @@
                             <h3 class="panel-title">登录</h3>
                         </div>
                         <div class="panel-body">
-                        <!-- 跳转链接指向自己可以写#  action="{% url 'login' %}"  -->
                             <form action="" method="POST">
-                                {% if login_form.captcha.errors %}
-                                    <div class="alert alert-warning">{{ login_form.captcha.errors }}</div>
-                                {% endif %}
-
                                 {% csrf_token %}
-                                <!-- {{ login_form }} -->
-                                <!-- 本来上面写就可以，但是为了去除账号密码后的: -->
                                 {% for field in login_form %}
-                                    <label for="field.id_for_label">{{ field.label }}</label>
+                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {% if field.id_for_label == 'id_password' %}
+                                        （<a href="{% url 'forgot_password' %}" tabindex=-1>忘记密码？</a>）
+                                    {% endif %}
                                     {{ field }}
-                                    <!-- 标红显示错误信息,和后面的span标签一起 -->
                                     <p class="text-danger">{{ field.errors.as_text }}</p>
                                 {% endfor %}
-                                <span class="text-danger">{{ login_form.non_field_errors }}</span>
-                                <div class="clearfix"></div>
-                                <a href="{% url 'forgot_password' %}" class="pull-left">忘记密码？</a>
+                                <span id="tip" class="text-danger">{{ login_form.non_field_errors }}</span>
+                                <div class="clearfix"></div>       
+                                <a style="margin-top: 8px; display: inline-block;" href="{% get_login_qq_url %}">
+                                    <img src="{% static 'user/qq.png' %}">
+                                    使用QQ账号登录
+                                </a>                         
                                 <input type="submit" value="登录" class="btn btn-primary pull-right">
                             </form>
                         </div>
                     </div>
+                    {% if request.GET.from %}
+                        <a style="text-align: center; display: block;" href="{% url 'register' %}?from={{ request.GET.from }}">前往注册 &gt;&gt;</a>
+                    {% else %}
+                        <a style="text-align: center; display: block;" href="{% url 'register' %}?from={{ request.get_full_path }}">前往注册 &gt;&gt;</a>
+                    {% endif %}                    
                 {% else %}
                     <span>已登录，跳转到首页...</span>
                     <script type="text/javascript">
@@ -50,4 +55,3 @@
 {% endblock %}
 
 
-          

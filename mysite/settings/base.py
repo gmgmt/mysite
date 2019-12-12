@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'notifications',
     'my_notifications',
     'captcha',
+    # 'social_django',
 ]
 
 MIDDLEWARE = [
@@ -71,8 +72,16 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 自己写的
                 'user.context_processors.login_modal_form',
+                # 第三方登陆
+                # 'social_django.context_processors.backends',
+                # 'social_django.context_processors.login_redirect',
             ],
+            # 'libraries':{
+            #             'urls_tags':  'user.templatetags.urls_tags',
+
+            # }
         },
     },
 ]
@@ -167,3 +176,34 @@ DJANGO_NOTIFICATIONS_CONFIG = {
 }
 
 
+
+
+# # 自定义用户验证
+# AUTHENTICATION_BACKENDS = (
+
+#     # 'social_core.backends.weibo.WeiboOAuth2',    # 微博
+#     'social_core.backends.qq.QQOAuth2',   # qq
+#     # 'social_core.backends.weixin.WeixinOAuth2',   # 微信
+
+#     'django.contrib.auth.backends.ModelBackend',    # django默认的必须添加
+
+# )
+
+# SOCIAL_AUTH_WEIBO_KEY = 'foobar'
+# SOCIAL_AUTH_WEIBO_SECRET = 'bazqux'
+
+# SOCIAL_AUTH_QQ_KEY = '101831535'
+# SOCIAL_AUTH_QQ_SECRET = 'b1355a9e964433f740cb4d37a4790b68'
+
+# # SOCIAL_AUTH_WEIXIN_KEY = 'foobar'
+# # SOCIAL_AUTH_WEIXIN_SECRET = 'bazqux'
+
+
+# SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'http://pengpeng666.top/user/login_by_qq' 
+
+
+
+QQ_APP_ID = '101831535'
+QQ_APP_KEY = 'b1355a9e964433f740cb4d37a4790b68'
+QQ_REDIRECT_URL = 'http://pengpeng666.top/user/login_by_qq'
+QQ_STATE = 'pengpeng666'
